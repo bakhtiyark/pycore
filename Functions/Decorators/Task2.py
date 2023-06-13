@@ -16,4 +16,4 @@ def log(fn):
 def foo(a, b, c):
     return a,b,c
 
-print(foo(1, 2, c=3))
+print(foo(1, 2, **{"fa":12,"dd":2}))
