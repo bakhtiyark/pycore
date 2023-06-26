@@ -16,23 +16,23 @@ Function call is not valid!
 Pixel created!
 """
 
-def print_function_info(should_count=False): 
-    count = 0 
-    def wrapper_func(func): 
-        def wrapper(*args, **kwargs): 
-            if should_count: 
-                nonlocal count 
-                count += 1
-                print(f"Function was called {count} times") 
-                print(f"Calling function {func} with args: {args} and kwargs: {kwargs}") 
-                return func(*args, **kwargs) 
-            return wrapper 
-        return wrapper_func 
+def validate(fn):
+    def wrapper(*args):
+        intermediate = []
+        for i in args:
+           if (0 <= i <= 256):
+              intermediate.append(i)              
+        if (len(intermediate) == len(args)):
+              return fn(*args)
+        else:
+            return "Function call is not valid!"
+        
+    return wrapper
+    
+@validate
+def set_pixel(x: int, y: int, z: int) -> str:
+  return "Pixel created!"
 
-@print_function_info
-def lala(*args, **kwargs):
-    print(args)
-    print(kwargs)
-    print(1)
 
-print(lala(("d","a","a")))
+print(set_pixel(0, 127, 300))
+print(set_pixel(0, 127, 250))

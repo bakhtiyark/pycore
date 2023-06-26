@@ -11,14 +11,18 @@ For example:
 >>> 43
 """
 
-def decorator_apply(*args):
-    def wrapper(fn):
-        print(args)
-        result = int(fn(args+1))
-        return result
+def decorator_apply(fn):
+    def wrapper(f):
+        def dw(x):
+            return f(fn(x))
+        return dw
     return wrapper
 
+
 @decorator_apply(lambda user_id: user_id + 1)
-def return_user_id(num: int): 
-        return num
+def return_user_id(num: int):
+    return num
+
 print(return_user_id(42))
+print(return_user_id(0))
+print(return_user_id(9))
