@@ -1,9 +1,16 @@
-﻿'''Functions. Decorators. Final Task 2.
-Implement a function split_by_index(s: str, indexes: List[int]) -> List[str] which splits the s string by indexes specified in indexes. The wrong indexes must be ignored. Examples:
+﻿from typing import List
 
->>> split_by_index("pythoniscool,isn'tit?", [6, 8, 12, 13, 18])
-["python", "is", "cool", ",", "isn't", "it?"]
+def split_by_index(s: str, indexes: List[int]) -> List[str]:
+    result = []
+    start = 0
 
->>> split_by_index("no luck", [42])
-["no luck"]
-        '''
+    for index in indexes:
+        if index >= 0 and index < len(s):
+            result.append(s[start:index])
+            start = index
+    result.append(s[start:])
+
+    return result
+
+print(split_by_index("pythoniscool,isn'tit?", [6, 8, 12, 13, 18]))
+print(split_by_index("no luck", [42]))
