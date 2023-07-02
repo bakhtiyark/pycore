@@ -1,43 +1,4 @@
-﻿"""Functions. Decorators. Decorators. Final Task 1.
-Implement a function that works the same as the str.split method (without using str.split itself, of course).
-
-Example:
-
-   
-        for char in firstsentence:
-    if char == " ":
-        words.append(current_word)
-        current_word = ""
-    else:
-        current_word += char
-"""
-def custom_split(string, separator=None, maxsplit=-1):
-    if separator is None:
-        separator = " "
-    
-    result = []
-    start = 0
-    count = 0
-    if maxsplit == 0:
-        return []
-
-    while maxsplit != count:
-        index = string.find(separator, start)
-        if index == -1:
-            break
-        
-        result.append(string[start:index])
-        start = index + len(separator)
-        count += 1
-
-    result.append(string[start:])
-    return result
-
-
-
-
-
-def split(data: str, sep=None, maxsplit=-1):
+﻿def split(data: str, sep=None, maxsplit=-1):
     if sep is None:
         sep = " "
     
