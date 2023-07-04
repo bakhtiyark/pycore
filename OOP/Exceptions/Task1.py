@@ -43,3 +43,5 @@
 
 lala = Pagination("Sweet Transvestite",5)
 print(lala.display_page(1))
+
+print(dir(lala))
