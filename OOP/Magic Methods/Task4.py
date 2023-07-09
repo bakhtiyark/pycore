@@ -1,33 +1,23 @@
-﻿class HistoryDict:
-    def __init__(self, dict) -> None:
-        self.dict = dict
-        self.history = []
-    def getDict(self):
-        return self.dict
-    def set_value(self,key,value):
-        self.dict.clear()
-        self.dict[key]=value
-        if (len(self.history)<5):
-            self.history.append(key)
-        else:
-            self.history.pop(0)
-            self.history.append(key)
-    def get_history(self):
-        return self.history
+﻿"""
+You must implement the class Book with the attributes price, author, and name.
 
-kkk = HistoryDict({"foo": 42})
+The author and name fields have to be immutable;
+The price field may have changes but has to be in the 0 <= price <= 100 range.
+If a user tries to change the author or name fields after an initialization or set price is out of range, the ValueError should be raised.
 
-print(kkk.getDict())
-kkk.set_value("bar",1)
-print(kkk.getDict())
-kkk.set_value("Donkey",2)
-print(kkk.getDict())
-kkk.set_value("Kong",3)
-print(kkk.getDict())
-kkk.set_value("Dr Who",4)
-print(kkk.getDict())
-kkk.set_value("Saddam",5)
-print(kkk.getDict())
-kkk.set_value("Hussein",6)
+Implement descriptors PriceControl and NameControl to validate parameters.
 
-print(kkk.get_history())
+Example
+>>> b = Book("William Faulkner", "The Sound and the Fury", 12)
+>>> print(f"Author='{b.author}', Name='{b.name}', Price='{b.price}'")
+Author='William Faulkner', Name='The Sound and the Fury', Price='12'
+
+>>> b.price = 55
+>>> b.price
+55
+>>> b.price = -12  # => ValueError: Price must be between 0 and 100.
+>>> b.price = 101  # => ValueError: Price must be between 0 and 100.
+
+>>> b.author = "new author"  # => ValueError: Author can not be changed.
+>>> b.name = "new name"      # => ValueError: Name can not be changed.
+"""
