@@ -4,8 +4,10 @@
 
     def walk(self):
         return f"{self.name} bird can walk"
+
     def fly(self):
         return f"{self.name} bird can fly"
+
     def __str__(self):
         return f"{self.name} bird can fly"
 
@@ -23,17 +25,19 @@ class NonFlyingBird(FlyingBird):
     def __init__(self, name, ration="grains"):
         super().__init__(name)
         self.ration = ration
+
     def fly(self):
-        raise AttributeError
+        # raise AttributeError
+        pass
 
     def swim(self):
         return f"{self.name} bird can swim"
+
 
 class SuperBird(NonFlyingBird):
     def __init__(self, name, ration="grains"):
         super().__init__(name)
         self.ration = ration
-
 
 
 tit = Bird("Great Tit")
