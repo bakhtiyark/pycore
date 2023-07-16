@@ -1,15 +1,18 @@
-﻿income = int(input())
-
-percent = 0
-if income <= 15527:
-    percent = 0
-elif 15528 <= income <= 42707:
-    percent = 15
-elif 42708 <= income <= 132406:
-    percent = 25
-elif income>132406:
-    percent = 28
-calculated_tax = round(income * (percent*0.01))
-
-print(f"The tax for {income} is {percent}%. That is {calculated_tax} dollars!")
-999
+﻿pencil_number = int(input("How many pencils would you like to use:"))
+name_x = "John"
+name_y = "Jack"
+first_person = input(f"Who will be the first ({name_x}, {name_y}):")
+print("|" * pencil_number)
+while(pencil_number>0):
+    if(first_person !=  name_x):
+        print(name_y + "'s turn:")
+        removal = int(input())
+        pencil_number -= removal
+        print("|" * pencil_number)
+        first_person = name_x
+    else:
+        print(name_x + "'s turn:")
+        removal = int(input())
+        pencil_number -= removal
+        print("|" * pencil_number)
+        first_person = name_y
