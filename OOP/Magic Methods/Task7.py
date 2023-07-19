@@ -1,33 +1,37 @@
-﻿class HistoryDict:
-    def __init__(self, dict) -> None:
-        self.dict = dict
-        self.history = []
-    def getDict(self):
-        return self.dict
-    def set_value(self,key,value):
-        self.dict.clear()
-        self.dict[key]=value
-        if (len(self.history)<5):
-            self.history.append(key)
-        else:
-            self.history.pop(0)
-            self.history.append(key)
-    def get_history(self):
-        return self.history
+﻿import datetime
+from contextlib import ContextDecorator
 
-kkk = HistoryDict({"foo": 42})
+class LogFile(ContextDecorator):
+    def __init__(self, log_file_name):
+        self.log_file_name = log_file_name
 
-print(kkk.getDict())
-kkk.set_value("bar",1)
-print(kkk.getDict())
-kkk.set_value("Donkey",2)
-print(kkk.getDict())
-kkk.set_value("Kong",3)
-print(kkk.getDict())
-kkk.set_value("Dr Who",4)
-print(kkk.getDict())
-kkk.set_value("Saddam",5)
-print(kkk.getDict())
-kkk.set_value("Hussein",6)
+    def __enter__(self):
+        self.start_time = datetime.datetime.now()
+        return self
 
-print(kkk.get_history())
+    def __exit__(self, exc_type, exc_value, traceback):
+        end_time = datetime.datetime.now()
+        execution_time = end_time - self.start_time
+        log_entry = f"Start: {self.start_time} | Run: {execution_time} | An error occurred: {exc_value}"
+        
+        with open(self.log_file_name, 'a') as log_file:
+            log_file.write(log_entry + "\n")
+
+        return exc_type is None
+
+    def log(self, message):
+        with open(self.log_file_name, 'a') as log_file:
+            log_file.write(message + "\n")  
+
+
+@LogFile('my_trace.log')
+def some_func():
+    for i in range(5):
+        print(i)
+        for k in range(10):
+            print(k)
+            for j in range(3):
+                print(j + k + i)
+    #print(1/0)
+
+some_func()

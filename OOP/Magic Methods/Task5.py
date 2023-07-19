@@ -1,33 +1,14 @@
-﻿class HistoryDict:
-    def __init__(self, dict) -> None:
-        self.dict = dict
-        self.history = []
-    def getDict(self):
-        return self.dict
-    def set_value(self,key,value):
-        self.dict.clear()
-        self.dict[key]=value
-        if (len(self.history)<5):
-            self.history.append(key)
-        else:
-            self.history.pop(0)
-            self.history.append(key)
-    def get_history(self):
-        return self.history
+﻿import os
+import shutil
+import tempfile
 
-kkk = HistoryDict({"foo": 42})
+class TempDir:
+    def __enter__(self):
+        self.original_dir = os.getcwd()
+        self.temp_dir = tempfile.mkdtemp()
+        os.chdir(self.temp_dir)
+        return self.temp_dir
 
-print(kkk.getDict())
-kkk.set_value("bar",1)
-print(kkk.getDict())
-kkk.set_value("Donkey",2)
-print(kkk.getDict())
-kkk.set_value("Kong",3)
-print(kkk.getDict())
-kkk.set_value("Dr Who",4)
-print(kkk.getDict())
-kkk.set_value("Saddam",5)
-print(kkk.getDict())
-kkk.set_value("Hussein",6)
-
-print(kkk.get_history())
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        os.chdir(self.original_dir)
+        shutil.rmtree(self.temp_dir)
