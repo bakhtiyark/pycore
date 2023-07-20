@@ -17,16 +17,53 @@ Example:
 
 
 class Cipher:
-    original = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-    substitution = ['C', 'R', 'Y', 'P', 'T', 'O', 'A', 'B', 'D', 'E', 'F', 'G',
-                    'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Q', 'S', 'U', 'V', 'W', 'X', 'Z']
+    def __init__(self, keyword):
+        self.keyword = keyword.lower()
+        self.cipher_alphabet = self.generate_cipher_alphabet()
 
-    def __init__(self) -> None:
-        pass
+    def generate_cipher_alphabet(self):
+        alphabet = "abcdefghijklmnopqrstuvwxyz"
+        unique_letters = sorted(set(self.keyword), key=self.keyword.index)
+        cipher_alphabet = self.keyword + \
+            "".join(letter for letter in alphabet if letter not in unique_letters)
+        return cipher_alphabet
 
-    def encode(str):
-        pass
+    def encode(self, text):
+        encoded_text = ""
 
-    def decode(str):
-        pass
+        for char in text:
+            if char.isalpha():
+                lower_char = char.lower()
+                index = ord(lower_char) - ord('a')
+                if char.isupper():
+                    encoded_text += self.cipher_alphabet[index].upper()
+                else:
+                    encoded_text += self.cipher_alphabet[index]
+            else:
+                encoded_text += char
+
+        return encoded_text
+
+    def decode(self, encrypted_text):
+        decoded_text = ""
+
+        for char in encrypted_text:
+            if char.isalpha():
+                lower_char = char.lower()
+                index = self.cipher_alphabet.index(lower_char)
+                if char.isupper():
+                    decoded_text += chr(index + ord('A'))
+                else:
+                    decoded_text += chr(index + ord('a'))
+            else:
+                decoded_text += char
+
+        return decoded_text
+
+cipher = Cipher("crypto")
+
+encoded_text = cipher.encode("Hello world")
+print(encoded_text)  # Output: "Btggj vjmgp"
+
+decoded_text = cipher.decode("Fjedhc dn atidsn")
+print(decoded_text)  # Output: "Kojima is genius"
